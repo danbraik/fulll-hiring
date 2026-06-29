@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Test manifest for Detox instrumentation tests -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application android:debuggable="true">
+        <!-- Override androidx.test activities to set exported=false for security -->
+        <activity
+            android:name="androidx.test.core.app.InstrumentationActivityInvoker$BootstrapActivity"
+            android:exported="false"
+            tools:replace="android:exported" />
+        <activity
+            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyActivity"
+            android:exported="false"
+            tools:replace="android:exported" />
+        <activity
+            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyFloatingActivity"
+            android:exported="false"
+            tools:replace="android:exported" />
+    </application>
+
+    <!-- Detox test runner -->
+    <instrumentation
+        android:name="com.wix.detox.runner.DetoxTestRunner"
+        android:targetPackage="com.detoxdemo"
+        android:handleProfiling="false"
+        android:functionalTest="false" />
+
+</manifest>

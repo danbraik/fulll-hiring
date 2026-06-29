@@ -1,0 +1,31 @@
+name: E2E steps lint
+
+# Lightweight check: validates that every Gherkin step has a matching step
+# definition (cucumber --dry-run). It does NOT build the app or run a device —
+# the real E2E suite runs locally against a simulator/emulator.
+
+on:
+  push:
+    branches: [main, solution]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  dry-run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Enable Corepack (Yarn Berry)
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Validate Gherkin steps are all defined
+        run: yarn e2e:lint
