@@ -45,6 +45,20 @@ Add an edit mode
 - Push your code to a Github repository
 - Document what you've done
 
+### AI-assisted development
+
+At Fulll, AI coding assistants and agents are encouraged as part of a responsible engineering workflow.
+You are welcome to use them for this exercise.
+
+In your documentation, briefly describe:
+- which tools you used
+- how you used them
+- how you reviewed and verified their output
+
+A few sentences are enough, a full prompt history is not expected.
+If you did not use AI, simply mention it.
+You remain responsible for, and should be able to explain, all submitted code.
+
 ### Evaluation
 
 - Quality of the code
