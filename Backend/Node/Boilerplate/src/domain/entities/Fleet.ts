@@ -1,15 +1,15 @@
 import { Result } from "../../shared/Result";
 import type { FleetId } from "../valueObjects/FleetId";
 import type { UserId } from "../valueObjects/UserId";
-import type { VehiculeId } from "../valueObjects/VehiculeId";
+import type { VehicleId } from "../valueObjects/VehicleId";
 
-export class AlreadyRegisteredVehiculeError extends Error {}
+export class AlreadyRegisteredVehicleError extends Error {}
 
 export class Fleet {
     private constructor(
         private readonly id: FleetId,
         private readonly ownerId: UserId,
-        private vehiculeIds: VehiculeId[],
+        private vehicleIds: VehicleId[],
     ) {}
 
     getId(): FleetId {
@@ -20,30 +20,30 @@ export class Fleet {
         return this.ownerId;
     }
 
-    getVehiculeIds(): VehiculeId[] {
-        return [...this.vehiculeIds];
+    getVehicleIds(): VehicleId[] {
+        return [...this.vehicleIds];
     }
 
-    hasVehicule(vehiculeId: VehiculeId): boolean {
-        return this.vehiculeIds.some((fleetVehiculeId) =>
-            fleetVehiculeId.equals(vehiculeId),
+    hasVehicle(vehicleId: VehicleId): boolean {
+        return this.vehicleIds.some((fleetVehicleId) =>
+            fleetVehicleId.equals(vehicleId),
         );
     }
 
-    addVehicule(vehiculeId: VehiculeId): Result<void> {
-        if (this.hasVehicule(vehiculeId)) {
-            return Result.fail(new AlreadyRegisteredVehiculeError());
+    addVehicle(vehicleId: VehicleId): Result<void> {
+        if (this.hasVehicle(vehicleId)) {
+            return Result.fail(new AlreadyRegisteredVehicleError());
         }
 
-        this.vehiculeIds.push(vehiculeId);
+        this.vehicleIds.push(vehicleId);
         return Result.ok(undefined);
     }
 
     static create(
         id: FleetId,
         ownerId: UserId,
-        vehiculeIds: VehiculeId[] = [],
+        vehicleIds: VehicleId[] = [],
     ): Fleet {
-        return new Fleet(id, ownerId, [...vehiculeIds]);
+        return new Fleet(id, ownerId, [...vehicleIds]);
     }
 }

@@ -1,5 +1,5 @@
 import type { FleetRepository } from "../../../../domain/repositories/FleetRepository";
-import type { VehiculeRepository } from "../../../../domain/repositories/VehiculeRepository";
+import type { VehicleRepository } from "../../../../domain/repositories/VehicleRepository";
 import { FleetId } from "../../../../domain/valueObjects/FleetId";
 import { PlateNumber } from "../../../../domain/valueObjects/PlateNumber";
 import { Result } from "../../../../shared/Result";
@@ -9,7 +9,7 @@ import type { IsVehicleRegisteredQuery } from "./IsVehicleRegisteredQuery";
 export class IsVehicleRegisteredQueryHandler {
     constructor(
         private readonly fleetRepository: FleetRepository,
-        private readonly vehiculeRepository: VehiculeRepository,
+        private readonly vehicleRepository: VehicleRepository,
     ) {}
 
     async handle(
@@ -27,19 +27,19 @@ export class IsVehicleRegisteredQueryHandler {
             return Result.fail(new FleetNotFoundError());
         }
 
-        const vehiculeResult = await this.vehiculeRepository.findByPlateNumber(
+        const vehicleResult = await this.vehicleRepository.findByPlateNumber(
             PlateNumber.create(query.plateNumber),
         );
-        if (vehiculeResult.isFailure) {
-            return Result.fail(vehiculeResult.error);
+        if (vehicleResult.isFailure) {
+            return Result.fail(vehicleResult.error);
         }
 
-        const vehicule = vehiculeResult.getValue();
-        if (!vehicule) {
+        const vehicle = vehicleResult.getValue();
+        if (!vehicle) {
             return Result.ok(false);
         }
 
-        const isRegistered = fleet.hasVehicule(vehicule.getId());
+        const isRegistered = fleet.hasVehicle(vehicle.getId());
 
         return Result.ok(isRegistered);
     }

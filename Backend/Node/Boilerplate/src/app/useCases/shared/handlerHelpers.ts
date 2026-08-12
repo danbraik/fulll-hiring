@@ -1,7 +1,7 @@
 import type { Fleet } from "../../../domain/entities/Fleet";
-import type { Vehicule } from "../../../domain/entities/Vehicule";
+import type { Vehicle } from "../../../domain/entities/Vehicle";
 import type { FleetRepository } from "../../../domain/repositories/FleetRepository";
-import type { VehiculeRepository } from "../../../domain/repositories/VehiculeRepository";
+import type { VehicleRepository } from "../../../domain/repositories/VehicleRepository";
 import { FleetId } from "../../../domain/valueObjects/FleetId";
 import { PlateNumber } from "../../../domain/valueObjects/PlateNumber";
 import { Result } from "../../../shared/Result";
@@ -12,7 +12,7 @@ export class VehicleNotRegisteredInFleetError extends Error {}
 
 type RegisteredVehicle = {
     fleet: Fleet;
-    vehicule: Vehicule;
+    vehicle: Vehicle;
 };
 
 export async function getFleetOrFail(
@@ -34,7 +34,7 @@ export async function getFleetOrFail(
 
 export async function getRegisteredVehicleOrFail(
     fleetRepository: FleetRepository,
-    vehiculeRepository: VehiculeRepository,
+    vehicleRepository: VehicleRepository,
     fleetId: string,
     plateNumber: string,
 ): Promise<Result<RegisteredVehicle, Error>> {
@@ -43,21 +43,21 @@ export async function getRegisteredVehicleOrFail(
         return Result.fail(fleetResult.error);
     }
 
-    const vehiculeResult = await vehiculeRepository.findByPlateNumber(
+    const vehicleResult = await vehicleRepository.findByPlateNumber(
         PlateNumber.create(plateNumber),
     );
-    if (vehiculeResult.isFailure) {
-        return Result.fail(vehiculeResult.error);
+    if (vehicleResult.isFailure) {
+        return Result.fail(vehicleResult.error);
     }
 
     const fleet = fleetResult.getValue();
-    const vehicule = vehiculeResult.getValue();
-    if (!vehicule || !fleet.hasVehicule(vehicule.getId())) {
+    const vehicle = vehicleResult.getValue();
+    if (!vehicle || !fleet.hasVehicle(vehicle.getId())) {
         return Result.fail(new VehicleNotRegisteredInFleetError());
     }
 
     return Result.ok({
         fleet,
-        vehicule,
+        vehicle,
     });
 }

@@ -1,18 +1,18 @@
 import type { Location } from "../valueObjects/Location";
 import type { PlateNumber } from "../valueObjects/PlateNumber";
-import type { VehiculeId } from "../valueObjects/VehiculeId";
+import type { VehicleId } from "../valueObjects/VehicleId";
 import { Result, type Result as ResultType } from "../../shared/Result";
 
 export class VehicleAlreadyParkedAtLocationError extends Error {}
 
-export class Vehicule {
+export class Vehicle {
     private constructor(
-        private readonly id: VehiculeId,
+        private readonly id: VehicleId,
         private plateNumber: PlateNumber,
         private location: Location | null,
     ) {}
 
-    getId(): VehiculeId {
+    getId(): VehicleId {
         return this.id;
     }
 
@@ -36,10 +36,10 @@ export class Vehicule {
     }
 
     static create(
-        id: VehiculeId,
+        id: VehicleId,
         plateNumber: PlateNumber,
         location: Location | null,
-    ): Vehicule {
-        return new Vehicule(id, plateNumber, location);
+    ): Vehicle {
+        return new Vehicle(id, plateNumber, location);
     }
 }

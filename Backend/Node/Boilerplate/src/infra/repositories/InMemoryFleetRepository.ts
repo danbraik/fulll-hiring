@@ -14,7 +14,7 @@ export class InMemoryFleetRepository implements FleetRepository {
             Fleet.create(
                 fleet.getId(),
                 fleet.getOwnerId(),
-                fleet.getVehiculeIds(),
+                fleet.getVehicleIds(),
             ),
         );
 
@@ -32,7 +32,7 @@ export class InMemoryFleetRepository implements FleetRepository {
             Fleet.create(
                 fleet.getId(),
                 fleet.getOwnerId(),
-                fleet.getVehiculeIds(),
+                fleet.getVehicleIds(),
             ),
         );
     }
