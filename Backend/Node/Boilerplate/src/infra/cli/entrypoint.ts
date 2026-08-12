@@ -10,11 +10,13 @@ import { GetVehicleLocationQueryHandler } from "../../app/useCases/queries/getVe
 import { IsVehicleRegisteredQuery } from "../../app/useCases/queries/isVehicleRegistered/IsVehicleRegisteredQuery";
 import { IsVehicleRegisteredQueryHandler } from "../../app/useCases/queries/isVehicleRegistered/IsVehicleRegisteredQueryHandler";
 import type { Result } from "../../shared/Result";
-import { InMemoryFleetRepository } from "../repositories/InMemoryFleetRepository";
-import { InMemoryVehicleRepository } from "../repositories/InMemoryVehicleRepository";
+import { initializeDatabase } from "../database/initialize";
+import { SqlFleetRepository } from "../repositories/SqlFleetRepository";
+import { SqlVehicleRepository } from "../repositories/SqlVehicleRepository";
 
-const fleetRepository = new InMemoryFleetRepository();
-const vehicleRepository = new InMemoryVehicleRepository();
+const database = initializeDatabase();
+const fleetRepository = new SqlFleetRepository(database);
+const vehicleRepository = new SqlVehicleRepository(database);
 
 const createFleetCommandHandler = new CreateFleetCommandHandler(
     fleetRepository,
