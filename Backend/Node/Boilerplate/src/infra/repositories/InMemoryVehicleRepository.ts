@@ -1,7 +1,7 @@
 import { Vehicle } from "../../domain/entities/Vehicle";
-import type { VehicleId } from "../../domain/valueObjects/VehicleId";
-import type { PlateNumber } from "../../domain/valueObjects/PlateNumber";
 import type { VehicleRepository } from "../../domain/repositories/VehicleRepository";
+import type { PlateNumber } from "../../domain/valueObjects/PlateNumber";
+import type { VehicleId } from "../../domain/valueObjects/VehicleId";
 import { Result } from "../../shared/Result";
 
 export class InMemoryVehicleRepository implements VehicleRepository {

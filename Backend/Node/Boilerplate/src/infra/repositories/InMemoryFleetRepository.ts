@@ -1,6 +1,6 @@
 import { Fleet } from "../../domain/entities/Fleet";
-import type { FleetId } from "../../domain/valueObjects/FleetId";
 import type { FleetRepository } from "../../domain/repositories/FleetRepository";
+import type { FleetId } from "../../domain/valueObjects/FleetId";
 import { Result } from "../../shared/Result";
 
 export class InMemoryFleetRepository implements FleetRepository {

@@ -1,19 +1,19 @@
-import { World, type IWorldOptions } from "@cucumber/cucumber";
-import type { FleetRepository } from "../../src/domain/repositories/FleetRepository";
-import { InMemoryFleetRepository } from "../../src/infra/repositories/InMemoryFleetRepository";
-import type { Fleet } from "../../src/domain/entities/Fleet";
+import { type IWorldOptions, World } from "@cucumber/cucumber";
+import type Database from "better-sqlite3";
 import { CreateFleetCommandHandler } from "../../src/app/useCases/commands/createFleet/CreateFleetCommandHandler";
-import type { Vehicle } from "../../src/domain/entities/Vehicle";
-import type { VehicleRepository } from "../../src/domain/repositories/VehicleRepository";
-import { InMemoryVehicleRepository } from "../../src/infra/repositories/InMemoryVehicleRepository";
 import { CreateVehicleCommandHandler } from "../../src/app/useCases/commands/createVehicle/CreateVehicleCommandHandler";
-import { RegisterVehicleCommandHandler } from "../../src/app/useCases/commands/registerVehicle/RegisterVehicleCommandHandler";
 import { ParkMyVehicleCommandHandler } from "../../src/app/useCases/commands/parkMyVehicle/ParkMyVehicleCommandHandler";
+import { RegisterVehicleCommandHandler } from "../../src/app/useCases/commands/registerVehicle/RegisterVehicleCommandHandler";
 import { GetVehicleLocationQueryHandler } from "../../src/app/useCases/queries/getVehicleLocation/GetVehicleLocationQueryHandler";
 import { IsVehicleRegisteredQueryHandler } from "../../src/app/useCases/queries/isVehicleRegistered/IsVehicleRegisteredQueryHandler";
-import type { Result } from "../../src/shared/Result";
+import type { Fleet } from "../../src/domain/entities/Fleet";
+import type { Vehicle } from "../../src/domain/entities/Vehicle";
+import type { FleetRepository } from "../../src/domain/repositories/FleetRepository";
+import type { VehicleRepository } from "../../src/domain/repositories/VehicleRepository";
 import type { Location } from "../../src/domain/valueObjects/Location";
-import Database from "better-sqlite3";
+import { InMemoryFleetRepository } from "../../src/infra/repositories/InMemoryFleetRepository";
+import { InMemoryVehicleRepository } from "../../src/infra/repositories/InMemoryVehicleRepository";
+import type { Result } from "../../src/shared/Result";
 
 export class TestingWorld extends World {
     fleetRepository: FleetRepository;

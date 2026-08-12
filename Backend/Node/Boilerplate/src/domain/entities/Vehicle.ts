@@ -1,7 +1,7 @@
+import { Result, type Result as ResultType } from "../../shared/Result";
 import type { Location } from "../valueObjects/Location";
 import type { PlateNumber } from "../valueObjects/PlateNumber";
 import type { VehicleId } from "../valueObjects/VehicleId";
-import { Result, type Result as ResultType } from "../../shared/Result";
 
 export class VehicleAlreadyParkedAtLocationError extends Error {
     constructor() {

@@ -1,9 +1,9 @@
+import { Given, Then, When } from "@cucumber/cucumber";
 import assert from "assert";
-import { Given, When, Then } from "@cucumber/cucumber";
-import type { TestingWorld } from "./TestingWorld";
-import { VehicleAlreadyParkedAtLocationError } from "../../src/domain/entities/Vehicle";
 import { AlreadyRegisteredVehicleError } from "../../src/domain/entities/Fleet";
+import { VehicleAlreadyParkedAtLocationError } from "../../src/domain/entities/Vehicle";
 import { Location } from "../../src/domain/valueObjects/Location";
+import type { TestingWorld } from "./TestingWorld";
 
 Given("my fleet", async function () {
     const that = this as TestingWorld;

@@ -1,7 +1,7 @@
-import type { Vehicle } from "../entities/Vehicle";
-import type { VehicleId } from "../valueObjects/VehicleId";
-import type { PlateNumber } from "../valueObjects/PlateNumber";
 import type { Result } from "../../shared/Result";
+import type { Vehicle } from "../entities/Vehicle";
+import type { PlateNumber } from "../valueObjects/PlateNumber";
+import type { VehicleId } from "../valueObjects/VehicleId";
 
 export interface VehicleRepository {
     save(vehicle: Vehicle): Promise<Result<void>>;
