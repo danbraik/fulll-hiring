@@ -8,6 +8,7 @@ import { VehiculeRepository } from '../../src/domain/repositories/VehiculeReposi
 import { InMemoryVehiculeRepository } from '../../src/infra/repositories/InMemoryVehiculeRepository';
 import { RegisterVehiculeCommandHandler } from '../../src/app/useCases/commands/registerVehicule/RegisterVehiculeCommandHandler';
 import { IsVehicleRegisteredQueryHandler } from '../../src/app/useCases/queries/isVehicleRegistered/IsVehicleRegisteredQueryHandler';
+import { Result } from '../../src/shared/Result';
 
 export class TestingWorld extends World {
     fleetRepository: FleetRepository;
@@ -17,8 +18,7 @@ export class TestingWorld extends World {
     registerVehiculeCommandHandler: RegisterVehiculeCommandHandler;
     isVehicleRegisteredQueryHandler: IsVehicleRegisteredQueryHandler;
 
-    myFleet?: Fleet;
-    myVehicule?: Vehicule;
+    lastRegisterVehiculeResult?: Result<void, Error>;
 
     constructor(options: IWorldOptions<any>) {
         super(options);

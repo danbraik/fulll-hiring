@@ -4,6 +4,7 @@ import { TestingWorld } from './TestingWorld';
 import { Vehicule } from '../../src/domain/entities/Vehicule';
 import { VehiculeId } from '../../src/domain/valueObjects/VehiculeId';
 import { PlateNumber } from '../../src/domain/valueObjects/PlateNumber';
+import { AlreadyRegisteredVehiculeError } from '../../src/domain/entities/Fleet';
 
 Given('my fleet', async function () {
   const that = this as TestingWorld;
@@ -56,3 +57,39 @@ Then('this vehicle should be part of my vehicle fleet', async function () {
   assert(result.isSuccess, `Failed to check vehicle registration: ${result.error?.message}`);
   assert.strictEqual(result.getValue(), true);
 });
+
+Given('I have registered this vehicle into my fleet', async function () {
+  const that = this as TestingWorld;
+
+  assert(that.myFleet, 'myFleet is not defined');
+  assert(that.myVehicule, 'myVehicule is not defined');
+
+  const result = await that.registerVehiculeCommandHandler.handle({
+    fleetId: that.myFleet.getId().toString(),
+    plateNumber: that.myVehicule.getPlateNumber().toString(),
+  });
+
+  assert(result.isSuccess, `Failed to register vehicle: ${result.error?.message}`);
+});
+
+When('I try to register this vehicle into my fleet', async function () {
+  const that = this as TestingWorld;
+
+  assert(that.myFleet, 'myFleet is not defined');
+  assert(that.myVehicule, 'myVehicule is not defined');
+
+  const result = await that.registerVehiculeCommandHandler.handle({
+    fleetId: that.myFleet.getId().toString(),
+    plateNumber: that.myVehicule.getPlateNumber().toString(),
+  });
+
+  that.lastRegisterVehiculeResult = result;
+});
+
+Then('I should be informed this this vehicle has already been registered into my fleet', function () {
+  const that = this as TestingWorld;
+
+  assert(that.lastRegisterVehiculeResult, 'lastRegisterVehiculeResult is not defined');
+  assert(that.lastRegisterVehiculeResult.error instanceof AlreadyRegisteredVehiculeError, 'Expected AlreadyRegisteredVehiculeError');
+});
+
