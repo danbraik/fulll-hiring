@@ -7,6 +7,7 @@ import { Vehicule } from '../../src/domain/entities/Vehicule';
 import { VehiculeRepository } from '../../src/domain/repositories/VehiculeRepository';
 import { InMemoryVehiculeRepository } from '../../src/infra/repositories/InMemoryVehiculeRepository';
 import { RegisterVehiculeCommandHandler } from '../../src/app/useCases/commands/registerVehicule/RegisterVehiculeCommandHandler';
+import { IsVehicleRegisteredQueryHandler } from '../../src/app/useCases/queries/isVehicleRegistered/IsVehicleRegisteredQueryHandler';
 
 export class TestingWorld extends World {
     fleetRepository: FleetRepository;
@@ -14,6 +15,7 @@ export class TestingWorld extends World {
 
     createFleetCommandHandler: CreateFleetCommandHandler;
     registerVehiculeCommandHandler: RegisterVehiculeCommandHandler;
+    isVehicleRegisteredQueryHandler: IsVehicleRegisteredQueryHandler;
 
     myFleet?: Fleet;
     myVehicule?: Vehicule;
@@ -25,6 +27,10 @@ export class TestingWorld extends World {
 
         this.createFleetCommandHandler = new CreateFleetCommandHandler(this.fleetRepository);
         this.registerVehiculeCommandHandler = new RegisterVehiculeCommandHandler(
+            this.fleetRepository,
+            this.vehiculeRepository,
+        );
+        this.isVehicleRegisteredQueryHandler = new IsVehicleRegisteredQueryHandler(
             this.fleetRepository,
             this.vehiculeRepository,
         );

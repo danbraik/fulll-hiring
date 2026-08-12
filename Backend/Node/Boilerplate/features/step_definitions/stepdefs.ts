@@ -42,3 +42,17 @@ When('I register this vehicle into my fleet', async function () {
   assert(result.isSuccess, `Failed to register vehicle: ${result.error?.message}`);
 });
 
+Then('this vehicle should be part of my vehicle fleet', async function () {
+  const that = this as TestingWorld;
+
+  assert(that.myFleet, 'myFleet is not defined');
+  assert(that.myVehicule, 'myVehicule is not defined');
+
+  const result = await that.isVehicleRegisteredQueryHandler.handle({
+    fleetId: that.myFleet.getId().toString(),
+    plateNumber: that.myVehicule.getPlateNumber().toString(),
+  });
+
+  assert(result.isSuccess, `Failed to check vehicle registration: ${result.error?.message}`);
+  assert.strictEqual(result.getValue(), true);
+});
