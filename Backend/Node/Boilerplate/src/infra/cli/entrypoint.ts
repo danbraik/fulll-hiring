@@ -5,9 +5,6 @@ import { ParkMyVehicleCommand } from "../../app/useCases/commands/parkMyVehicle/
 import { ParkMyVehicleCommandHandler } from "../../app/useCases/commands/parkMyVehicle/ParkMyVehicleCommandHandler";
 import { RegisterVehicleCommand } from "../../app/useCases/commands/registerVehicle/RegisterVehicleCommand";
 import { RegisterVehicleCommandHandler } from "../../app/useCases/commands/registerVehicle/RegisterVehicleCommandHandler";
-import { GetVehicleLocationQueryHandler } from "../../app/useCases/queries/getVehicleLocation/GetVehicleLocationQueryHandler";
-import { IsVehicleRegisteredQuery } from "../../app/useCases/queries/isVehicleRegistered/IsVehicleRegisteredQuery";
-import { IsVehicleRegisteredQueryHandler } from "../../app/useCases/queries/isVehicleRegistered/IsVehicleRegisteredQueryHandler";
 import type { Result } from "../../shared/Result";
 import { initializeDatabase } from "../database/initialize";
 import { SqlFleetRepository } from "../repositories/SqlFleetRepository";
@@ -27,14 +24,6 @@ const registerVehicleCommandHandler = new RegisterVehicleCommandHandler(
     vehicleRepository,
 );
 const parkMyVehicleCommandHandler = new ParkMyVehicleCommandHandler(
-    fleetRepository,
-    vehicleRepository,
-);
-const isVehicleRegisteredQueryHandler = new IsVehicleRegisteredQueryHandler(
-    fleetRepository,
-    vehicleRepository,
-);
-const getVehicleLocationQueryHandler = new GetVehicleLocationQueryHandler(
     fleetRepository,
     vehicleRepository,
 );
@@ -100,16 +89,6 @@ program
                 new RegisterVehicleCommand(fleetId, vehiclePlateNumber),
             ),
         );
-
-        const isRegistered = unwrapResult(
-            await isVehicleRegisteredQueryHandler.handle(
-                new IsVehicleRegisteredQuery(fleetId, vehiclePlateNumber),
-            ),
-        );
-
-        if (!isRegistered) {
-            throw new Error("Vehicle registration verification failed");
-        }
     });
 
 program
