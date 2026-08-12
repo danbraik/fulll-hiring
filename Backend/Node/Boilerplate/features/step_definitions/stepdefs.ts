@@ -2,11 +2,11 @@ import assert from "assert";
 import { Given, When, Then } from "@cucumber/cucumber";
 import type { TestingWorld } from "./TestingWorld";
 import { Vehicule } from "../../src/domain/entities/Vehicule";
+import { VehicleAlreadyParkedAtLocationError } from "../../src/domain/entities/Vehicule";
 import { VehiculeId } from "../../src/domain/valueObjects/VehiculeId";
 import { PlateNumber } from "../../src/domain/valueObjects/PlateNumber";
 import { AlreadyRegisteredVehiculeError } from "../../src/domain/entities/Fleet";
 import { Location } from "../../src/domain/valueObjects/Location";
-import { VehicleAlreadyParkedAtLocationError } from "../../src/app/useCases/commands/parkMyVehicle/ParkMyVehicleCommandHandler";
 
 Given("my fleet", async function () {
     const that = this as TestingWorld;

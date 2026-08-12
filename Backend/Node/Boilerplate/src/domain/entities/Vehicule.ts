@@ -1,6 +1,9 @@
 import type { Location } from "../valueObjects/Location";
 import type { PlateNumber } from "../valueObjects/PlateNumber";
 import type { VehiculeId } from "../valueObjects/VehiculeId";
+import { Result, type Result as ResultType } from "../../shared/Result";
+
+export class VehicleAlreadyParkedAtLocationError extends Error {}
 
 export class Vehicule {
     private constructor(
@@ -21,8 +24,15 @@ export class Vehicule {
         return this.location;
     }
 
-    setLocation(location: Location | null): void {
+    setLocation(
+        location: Location | null,
+    ): ResultType<void, VehicleAlreadyParkedAtLocationError> {
+        if (this.location && location && this.location.equals(location)) {
+            return Result.fail(new VehicleAlreadyParkedAtLocationError());
+        }
+
         this.location = location;
+        return Result.ok(undefined);
     }
 
     static create(

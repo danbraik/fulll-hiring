@@ -9,8 +9,6 @@ import type { ParkMyVehicleCommand } from "./ParkMyVehicleCommand";
 
 export class VehicleNotRegisteredInFleetError extends Error {}
 
-export class VehicleAlreadyParkedAtLocationError extends Error {}
-
 export class ParkMyVehicleCommandHandler {
     constructor(
         private readonly fleetRepository: FleetRepository,
@@ -47,12 +45,11 @@ export class ParkMyVehicleCommandHandler {
             command.location.longitude,
             command.location.altitude,
         );
-        const currentLocation = vehicule.getLocation();
-        if (currentLocation?.equals(location)) {
-            return Result.fail(new VehicleAlreadyParkedAtLocationError());
-        }
 
-        vehicule.setLocation(location);
+        const setLocationResult = vehicule.setLocation(location);
+        if (setLocationResult.isFailure) {
+            return Result.fail(setLocationResult.error);
+        }
 
         const saveVehiculeResult = await this.vehiculeRepository.save(vehicule);
         if (saveVehiculeResult.isFailure) {
