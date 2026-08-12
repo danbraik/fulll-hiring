@@ -7,6 +7,7 @@ import { Vehicule } from '../../src/domain/entities/Vehicule';
 import { VehiculeRepository } from '../../src/domain/repositories/VehiculeRepository';
 import { InMemoryVehiculeRepository } from '../../src/infra/repositories/InMemoryVehiculeRepository';
 import { RegisterVehiculeCommandHandler } from '../../src/app/useCases/commands/registerVehicule/RegisterVehiculeCommandHandler';
+import { ParkMyVehicleCommandHandler } from '../../src/app/useCases/commands/parkMyVehicle/ParkMyVehicleCommandHandler';
 import { IsVehicleRegisteredQueryHandler } from '../../src/app/useCases/queries/isVehicleRegistered/IsVehicleRegisteredQueryHandler';
 import { Result } from '../../src/shared/Result';
 import { Location } from '../../src/domain/valueObjects/Location';
@@ -17,6 +18,8 @@ export class TestingWorld extends World {
 
     createFleetCommandHandler: CreateFleetCommandHandler;
     registerVehiculeCommandHandler: RegisterVehiculeCommandHandler;
+    parkMyVehicleCommandHandler: ParkMyVehicleCommandHandler;
+
     isVehicleRegisteredQueryHandler: IsVehicleRegisteredQueryHandler;
 
     myFleet?: Fleet;
@@ -37,6 +40,11 @@ export class TestingWorld extends World {
             this.fleetRepository,
             this.vehiculeRepository,
         );
+        this.parkMyVehicleCommandHandler = new ParkMyVehicleCommandHandler(
+            this.fleetRepository,
+            this.vehiculeRepository,
+        );
+
         this.isVehicleRegisteredQueryHandler = new IsVehicleRegisteredQueryHandler(
             this.fleetRepository,
             this.vehiculeRepository,

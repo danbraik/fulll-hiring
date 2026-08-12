@@ -121,3 +121,23 @@ Given('a location', function () {
   const that = this as TestingWorld;
   that.aLocation = Location.create(12, 13);
 });
+
+When('I park my vehicle at this location', async function () {
+  const that = this as TestingWorld;
+
+  assert(that.myFleet, 'myFleet is not defined');
+  assert(that.myVehicule, 'myVehicule is not defined');
+  assert(that.aLocation, 'aLocation is not defined');
+
+  const result = await that.parkMyVehicleCommandHandler.handle({
+    fleetId: that.myFleet.getId().toString(),
+    plateNumber: that.myVehicule.getPlateNumber().toString(),
+    location: {
+      latitude: that.aLocation.getLatitude(),
+      longitude: that.aLocation.getLongitude(),
+      altitude: that.aLocation.getAltitude(),
+    },
+  });
+
+  assert(result.isSuccess, `Failed to park vehicle: ${result.error?.message}`);
+});
