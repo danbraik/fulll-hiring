@@ -9,6 +9,7 @@ import { InMemoryVehiculeRepository } from '../../src/infra/repositories/InMemor
 import { RegisterVehiculeCommandHandler } from '../../src/app/useCases/commands/registerVehicule/RegisterVehiculeCommandHandler';
 import { IsVehicleRegisteredQueryHandler } from '../../src/app/useCases/queries/isVehicleRegistered/IsVehicleRegisteredQueryHandler';
 import { Result } from '../../src/shared/Result';
+import { Location } from '../../src/domain/valueObjects/Location';
 
 export class TestingWorld extends World {
     fleetRepository: FleetRepository;
@@ -20,6 +21,8 @@ export class TestingWorld extends World {
     otherFleet?: Fleet;
 
     lastRegisterVehiculeResult?: Result<void, Error>;
+
+    aLocation?: Location;
 
     constructor(options: IWorldOptions<any>) {
         super(options);

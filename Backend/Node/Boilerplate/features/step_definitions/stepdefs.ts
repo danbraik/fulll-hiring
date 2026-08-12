@@ -5,6 +5,7 @@ import { Vehicule } from '../../src/domain/entities/Vehicule';
 import { VehiculeId } from '../../src/domain/valueObjects/VehiculeId';
 import { PlateNumber } from '../../src/domain/valueObjects/PlateNumber';
 import { AlreadyRegisteredVehiculeError } from '../../src/domain/entities/Fleet';
+import { Location } from '../../src/domain/valueObjects/Location';
 
 Given('my fleet', async function () {
   const that = this as TestingWorld;
@@ -114,4 +115,9 @@ Given('this vehicle has been registered into the other user\'s fleet', async fun
   });
 
   assert(result.isSuccess, `Failed to register vehicle: ${result.error?.message}`);
+});
+
+Given('a location', function () {
+  const that = this as TestingWorld;
+  that.aLocation = Location.create(12, 13);
 });
