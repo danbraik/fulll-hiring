@@ -52,8 +52,9 @@ export class SqlFleetRepository implements FleetRepository {
             SET owner_id = excluded.owner_id
         `);
         this.insertFleetVehicleStatement = this.database.prepare(`
-            INSERT OR IGNORE INTO fleet_vehicles (fleet_id, vehicle_id)
+            INSERT INTO fleet_vehicles (fleet_id, vehicle_id)
             VALUES (@fleetId, @vehicleId)
+            ON CONFLICT (fleet_id, vehicle_id) DO NOTHING
         `);
         this.findFleetByIdStatement = this.database.prepare(`
             SELECT id, owner_id
