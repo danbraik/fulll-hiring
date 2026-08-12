@@ -1,10 +1,8 @@
 {
-  "default": {
-    "require": [
-      "dist/features/**/*.js"
-    ],
-    "formatOptions": {
-      "snippetInterface": "synchronous"
+    "default": {
+        "require": ["dist/features/**/*.js"],
+        "formatOptions": {
+            "snippetInterface": "synchronous"
+        }
     }
-  }
 }

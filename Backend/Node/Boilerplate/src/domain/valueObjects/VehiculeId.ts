@@ -1,27 +1,27 @@
 import { randomUUID } from "crypto";
 
 export class VehiculeId {
-  private constructor(private readonly value: string) { }
+    private constructor(private readonly value: string) {}
 
-  static create(value: string): VehiculeId {
-    const normalizedValue = value.trim();
+    static create(value: string): VehiculeId {
+        const normalizedValue = value.trim();
 
-    if (normalizedValue.length === 0) {
-      throw new Error('VehiculeId cannot be empty.');
+        if (normalizedValue.length === 0) {
+            throw new Error("VehiculeId cannot be empty.");
+        }
+
+        return new VehiculeId(normalizedValue);
     }
 
-    return new VehiculeId(normalizedValue);
-  }
+    equals(other: VehiculeId): boolean {
+        return this.value === other.value;
+    }
 
-  equals(other: VehiculeId): boolean {
-    return this.value === other.value;
-  }
+    toString(): string {
+        return this.value;
+    }
 
-  toString(): string {
-    return this.value;
-  }
-
-  static generate(): VehiculeId {
-    return new VehiculeId(randomUUID());
-  }
+    static generate(): VehiculeId {
+        return new VehiculeId(randomUUID());
+    }
 }

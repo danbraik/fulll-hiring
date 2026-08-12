@@ -1,4 +1,4 @@
-import { setWorldConstructor } from '@cucumber/cucumber';
-import { TestingWorld } from './TestingWorld';
+import { setWorldConstructor } from "@cucumber/cucumber";
+import { TestingWorld } from "./TestingWorld";
 
-setWorldConstructor(TestingWorld)
+setWorldConstructor(TestingWorld);
