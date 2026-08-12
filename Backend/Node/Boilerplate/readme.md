@@ -131,6 +131,12 @@ They store and return fresh entity instances instead of sharing object reference
 
 This keeps the aggregate boundary simple and prevents external mutation.
 
+### Location interpretation
+
+I was not sure about the location: is it related to a vehicle only or to a relation fleet-vehicle?
+We need to discuss with people to understand the create and create new test scenario.
+For now, I decided to attach a location to a vehicle because a vehicle can be parked at only place at the same time.
+
 ### Location equality
 
 `Location.equals()` compares latitude, longitude, and altitude.
