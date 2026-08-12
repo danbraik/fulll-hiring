@@ -8,7 +8,7 @@ import { Location } from "../../src/domain/valueObjects/Location";
 Given("my fleet", async function () {
     const that = this as TestingWorld;
 
-    const handlerResult = await that.createFleetCommandHandler.handle({
+    const handlerResult = await that.getCreateFleetCommandHandler().handle({
         userId: "user-1",
     });
     assert(
@@ -22,7 +22,7 @@ Given("my fleet", async function () {
 Given("a vehicle", async function () {
     const that = this as TestingWorld;
 
-    const result = await that.createVehicleCommandHandler.handle({
+    const result = await that.getCreateVehicleCommandHandler().handle({
         plateNumber: "ABC-123",
     });
     assert(
@@ -39,7 +39,7 @@ When("I register this vehicle into my fleet", async function () {
     assert(that.myFleet, "myFleet is not defined");
     assert(that.myVehicle, "myVehicle is not defined");
 
-    const result = await that.registerVehicleCommandHandler.handle({
+    const result = await that.getRegisterVehicleCommandHandler().handle({
         fleetId: that.myFleet.getId().toString(),
         plateNumber: that.myVehicle.getPlateNumber().toString(),
     });
@@ -56,7 +56,7 @@ Then("this vehicle should be part of my vehicle fleet", async function () {
     assert(that.myFleet, "myFleet is not defined");
     assert(that.myVehicle, "myVehicle is not defined");
 
-    const result = await that.isVehicleRegisteredQueryHandler.handle({
+    const result = await that.getIsVehicleRegisteredQueryHandler().handle({
         fleetId: that.myFleet.getId().toString(),
         plateNumber: that.myVehicle.getPlateNumber().toString(),
     });
@@ -74,7 +74,7 @@ Given("I have registered this vehicle into my fleet", async function () {
     assert(that.myFleet, "myFleet is not defined");
     assert(that.myVehicle, "myVehicle is not defined");
 
-    const result = await that.registerVehicleCommandHandler.handle({
+    const result = await that.getRegisterVehicleCommandHandler().handle({
         fleetId: that.myFleet.getId().toString(),
         plateNumber: that.myVehicle.getPlateNumber().toString(),
     });
@@ -91,7 +91,7 @@ When("I try to register this vehicle into my fleet", async function () {
     assert(that.myFleet, "myFleet is not defined");
     assert(that.myVehicle, "myVehicle is not defined");
 
-    const result = await that.registerVehicleCommandHandler.handle({
+    const result = await that.getRegisterVehicleCommandHandler().handle({
         fleetId: that.myFleet.getId().toString(),
         plateNumber: that.myVehicle.getPlateNumber().toString(),
     });
@@ -119,7 +119,7 @@ Then(
 Given("the fleet of another user", async function () {
     const that = this as TestingWorld;
 
-    const handlerResult = await that.createFleetCommandHandler.handle({
+    const handlerResult = await that.getCreateFleetCommandHandler().handle({
         userId: "user-1",
     });
     assert(
@@ -138,7 +138,7 @@ Given(
         assert(that.otherFleet, "otherFleet is not defined");
         assert(that.myVehicle, "myVehicle is not defined");
 
-        const result = await that.registerVehicleCommandHandler.handle({
+        const result = await that.getRegisterVehicleCommandHandler().handle({
             fleetId: that.otherFleet.getId().toString(),
             plateNumber: that.myVehicle.getPlateNumber().toString(),
         });
@@ -162,7 +162,7 @@ When("I park my vehicle at this location", async function () {
     assert(that.myVehicle, "myVehicle is not defined");
     assert(that.aLocation, "aLocation is not defined");
 
-    const result = await that.parkMyVehicleCommandHandler.handle({
+    const result = await that.getParkMyVehicleCommandHandler().handle({
         fleetId: that.myFleet.getId().toString(),
         plateNumber: that.myVehicle.getPlateNumber().toString(),
         location: {
@@ -187,7 +187,7 @@ Then(
         assert(that.myVehicle, "myVehicle is not defined");
         assert(that.aLocation, "aLocation is not defined");
 
-        const result = await that.getVehicleLocationQueryHandler.handle({
+        const result = await that.getGetVehicleLocationQueryHandler().handle({
             fleetId: that.myFleet.getId().toString(),
             plateNumber: that.myVehicle.getPlateNumber().toString(),
         });
@@ -210,7 +210,7 @@ Given("my vehicle has been parked into this location", async function () {
     assert(that.myVehicle, "myVehicle is not defined");
     assert(that.aLocation, "aLocation is not defined");
 
-    const result = await that.parkMyVehicleCommandHandler.handle({
+    const result = await that.getParkMyVehicleCommandHandler().handle({
         fleetId: that.myFleet.getId().toString(),
         plateNumber: that.myVehicle.getPlateNumber().toString(),
         location: {
@@ -233,7 +233,7 @@ When("I try to park my vehicle at this location", async function () {
     assert(that.myVehicle, "myVehicle is not defined");
     assert(that.aLocation, "aLocation is not defined");
 
-    const result = await that.parkMyVehicleCommandHandler.handle({
+    const result = await that.getParkMyVehicleCommandHandler().handle({
         fleetId: that.myFleet.getId().toString(),
         plateNumber: that.myVehicle.getPlateNumber().toString(),
         location: {
