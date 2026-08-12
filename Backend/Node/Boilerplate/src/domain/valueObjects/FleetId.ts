@@ -1,3 +1,5 @@
+import { randomUUID } from 'crypto';
+
 export class FleetId {
   private constructor(private readonly value: string) { }
 
@@ -9,6 +11,10 @@ export class FleetId {
     }
 
     return new FleetId(normalizedValue);
+  }
+
+  static generate(): FleetId {
+    return new FleetId(randomUUID());
   }
 
   equals(other: FleetId): boolean {
