@@ -1,10 +1,7 @@
 import assert from "assert";
 import { Given, When, Then } from "@cucumber/cucumber";
 import type { TestingWorld } from "./TestingWorld";
-import { Vehicule } from "../../src/domain/entities/Vehicule";
 import { VehicleAlreadyParkedAtLocationError } from "../../src/domain/entities/Vehicule";
-import { VehiculeId } from "../../src/domain/valueObjects/VehiculeId";
-import { PlateNumber } from "../../src/domain/valueObjects/PlateNumber";
 import { AlreadyRegisteredVehiculeError } from "../../src/domain/entities/Fleet";
 import { Location } from "../../src/domain/valueObjects/Location";
 
@@ -25,17 +22,15 @@ Given("my fleet", async function () {
 Given("a vehicle", async function () {
     const that = this as TestingWorld;
 
-    that.myVehicule = Vehicule.create(
-        VehiculeId.create("vehicule-1"),
-        PlateNumber.create("ABC-123"),
-        null,
-    );
-
-    const result = await that.vehiculeRepository.save(that.myVehicule);
+    const result = await that.createVehiculeCommandHandler.handle({
+        plateNumber: "ABC-123",
+    });
     assert(
         result.isSuccess,
-        `Failed to save vehicle: ${result.error?.message}`,
+        `Failed to create vehicle: ${result.error?.message}`,
     );
+
+    that.myVehicule = result.getValue();
 });
 
 When("I register this vehicle into my fleet", async function () {

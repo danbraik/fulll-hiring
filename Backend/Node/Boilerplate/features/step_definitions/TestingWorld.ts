@@ -6,6 +6,7 @@ import { CreateFleetCommandHandler } from "../../src/app/useCases/commands/creat
 import type { Vehicule } from "../../src/domain/entities/Vehicule";
 import type { VehiculeRepository } from "../../src/domain/repositories/VehiculeRepository";
 import { InMemoryVehiculeRepository } from "../../src/infra/repositories/InMemoryVehiculeRepository";
+import { CreateVehiculeCommandHandler } from "../../src/app/useCases/commands/createVehicule/CreateVehiculeCommandHandler";
 import { RegisterVehiculeCommandHandler } from "../../src/app/useCases/commands/registerVehicule/RegisterVehiculeCommandHandler";
 import { ParkMyVehicleCommandHandler } from "../../src/app/useCases/commands/parkMyVehicle/ParkMyVehicleCommandHandler";
 import { GetVehicleLocationQueryHandler } from "../../src/app/useCases/queries/getVehicleLocation/GetVehicleLocationQueryHandler";
@@ -18,6 +19,7 @@ export class TestingWorld extends World {
     vehiculeRepository: VehiculeRepository;
 
     createFleetCommandHandler: CreateFleetCommandHandler;
+    createVehiculeCommandHandler: CreateVehiculeCommandHandler;
     registerVehiculeCommandHandler: RegisterVehiculeCommandHandler;
     parkMyVehicleCommandHandler: ParkMyVehicleCommandHandler;
 
@@ -39,6 +41,9 @@ export class TestingWorld extends World {
 
         this.createFleetCommandHandler = new CreateFleetCommandHandler(
             this.fleetRepository,
+        );
+        this.createVehiculeCommandHandler = new CreateVehiculeCommandHandler(
+            this.vehiculeRepository,
         );
         this.registerVehiculeCommandHandler =
             new RegisterVehiculeCommandHandler(
