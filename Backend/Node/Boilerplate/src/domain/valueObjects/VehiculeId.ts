@@ -1,3 +1,5 @@
+import { randomUUID } from "crypto";
+
 export class VehiculeId {
   private constructor(private readonly value: string) { }
 
@@ -17,5 +19,9 @@ export class VehiculeId {
 
   toString(): string {
     return this.value;
+  }
+
+  static generate(): VehiculeId {
+    return new VehiculeId(randomUUID());
   }
 }
