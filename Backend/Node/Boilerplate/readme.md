@@ -176,3 +176,103 @@ See:
 - TypeScript for implementation
 - Cucumber for behavior tests
 - Biome is configured in `biome.json`
+
+
+## Code quality
+
+-We are using biome to format and linter. It replaces ESLint and Prettier.
+-we are using strict Typescript in tsconfig.json
+-we can add unit tests with vitest (native support of TS)
+-we can check code coverage with vitest too
+-to keep our Clean Architecture codebase and prevent regression, we can use a tool to check file dependencies as @archlinter/cli
+-check 'npm audit' regularly 
+-check dependency updates regularly (dependabot workflow)
+
+## CI/CD workflow
+
+- We suppose we want to deploy the CLI tool as an npm package
+- so, we can add a Github Action for example to run:
+  - git repository checkout
+  - dependencies installation
+  - npm audit
+  - check code format
+  - checking lint & types
+  - for a PostgreSQL database: 
+    - running a testing database service
+    - running migrations
+  - running build
+  - running feature tests
+  - running tests & coverage
+  - publish coverage report
+  - publish source maps on third services (Sentry for example)
+  - if we are on main branch:
+    - add a git tag for the new release
+    - publish the npm package
+
+
+# Step 3 subjects
+
+## Code quality strategy
+ 
+
+- **Biome** is used for formatting and static analysis. It replaces ESLint and Prettier in this project, reducing configuration and execution time.
+- **TypeScript strict mode** is enabled to detect type inconsistencies at compile time.
+- **Cucumber scenarios** remain the executable specification of the expected business behavior.
+- **Vitest** may complement BDD tests with focused and fast unit tests for domain invariants, value objects and application handlers.
+- **`@vitest/coverage-v8`** can identify insufficiently tested areas. Coverage is treated as a diagnostic metric, not as a quality objective by itself.
+- Architectural dependency rules should ensure that:
+  - Domain does not depend on App or Infra;
+  - App does not depend on concrete infrastructure;
+  - Infra implements ports defined by the inner layers.
+
+  These rules can be automated with a tool such as dependency-cruiser. The chosen tool should only be introduced if the rules are
+  configured and enforced in CI.
+- `npm audit` detects known dependency vulnerabilities. Dependency updates and security alerts can be automated with Github Dependabot.
+- Dependencies and Node.js versions should be pinned through the lockfile and the project configuration to make builds reproducible.
+- Environment variables are documented in `.env.example`; secrets are never committed.
+- The same validation command should run locally and in CI to avoid differences between developer and pipeline environments.
+
+
+## CI strategy
+
+ 
+1. Check out the repository.
+2. Set up the pinned Node.js version and use the npm cache.
+3. Install dependencies with `npm ci`.
+4. Run Biome checks.
+5. Run TypeScript type checking.
+6. Validate architectural dependency rules.
+7. Run unit and BDD tests against in-memory repositories.
+8. Build the CLI.
+9. Start an isolated PostgreSQL service.
+10. Apply migrations to an empty database.
+11. Run PostgreSQL integration scenarios.
+12. Optionally upload coverage and test reports.
+13. Run Code Quality tools like SonarQube.
+14. Run IA agents to check that global enterprise patterns are respected.
+
+Fast checks and PostgreSQL integration tests may run as separate parallel jobs.
+Publication must remain impossible if any required quality gate fails.
+
+## CD and release strategy
+
+Assuming the CLI is distributed through npm, publication should be handled by a separate release workflow rather than by the pull-request workflow.
+
+- Use semantic versioning and publish only from a protected version tag.
+- Build and test the package once, then publish the validated artifact instead of rebuilding different content during the release job.
+- Generate release notes or a changelog from the released changes.
+- Verify the package contents before publication with `npm pack --dry-run`.
+- Protect the release environment and require approval when appropriate.
+- Publish prerelease versions under a dedicated npm tag when needed.
+
+## Quality gates
+
+A pull request can be merged only when:
+
+- formatting, linting and type checking pass;
+- unit, BDD and integration tests pass;
+- architectural rules are respected;
+- the application builds successfully;
+- no unacceptable security vulnerability is introduced;
+- required reviews have been approved.
+ 
