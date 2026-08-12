@@ -18,13 +18,16 @@ Given('my fleet', async function () {
   that.myFleet = handlerResult.getValue();
 });
 
-Given('a vehicle', function () {
+Given('a vehicle', async function () {
   const that = this as TestingWorld;
 
   that.myVehicule = Vehicule.create(
     VehiculeId.create('vehicule-1'),
     PlateNumber.create('ABC-123'),
-    Location.create(0, 0)
+    null
   );
+
+  await that.vehiculeRepository.save(that.myVehicule);
 });
+
 

@@ -4,9 +4,13 @@ import { InMemoryFleetRepository } from '../../src/infra/repositories/InMemoryFl
 import { Fleet } from '../../src/domain/entities/Fleet';
 import { CreateFleetCommandHandler } from '../../src/app/useCases/commands/createFleet/CreateFleetCommandHandler';
 import { Vehicule } from '../../src/domain/entities/Vehicule';
+import { VehiculeRepository } from '../../src/domain/repositories/VehiculeRepository';
+import { InMemoryVehiculeRepository } from '../../src/infra/repositories/InMemoryVehiculeRepository';
 
 export class TestingWorld extends World {
     fleetRepository: FleetRepository;
+    vehiculeRepository: VehiculeRepository;
+    
     createFleetCommandHandler: CreateFleetCommandHandler;
     myFleet?: Fleet;
     myVehicule?: Vehicule;
@@ -14,6 +18,8 @@ export class TestingWorld extends World {
     constructor(options: IWorldOptions<any>) {
         super(options);
         this.fleetRepository = new InMemoryFleetRepository();
+        this.vehiculeRepository = new InMemoryVehiculeRepository();
+        
         this.createFleetCommandHandler = new CreateFleetCommandHandler(this.fleetRepository);
     }
 }
