@@ -141,3 +141,22 @@ When('I park my vehicle at this location', async function () {
 
   assert(result.isSuccess, `Failed to park vehicle: ${result.error?.message}`);
 });
+
+Then('the known location of my vehicle should verify this location', async function () {
+  const that = this as TestingWorld;
+
+  assert(that.myFleet, 'myFleet is not defined');
+  assert(that.myVehicule, 'myVehicule is not defined');
+  assert(that.aLocation, 'aLocation is not defined');
+
+  const result = await that.getVehicleLocationQueryHandler.handle({
+    fleetId: that.myFleet.getId().toString(),
+    plateNumber: that.myVehicule.getPlateNumber().toString(),
+  });
+
+  assert(result.isSuccess, `Failed to get vehicle location: ${result.error?.message}`);
+
+  const knownLocation = result.getValue();
+  assert(knownLocation, 'Expected vehicle location to be defined');
+  assert.strictEqual(knownLocation.equals(that.aLocation), true);
+});
