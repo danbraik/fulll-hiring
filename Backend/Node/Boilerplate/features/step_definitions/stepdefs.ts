@@ -101,3 +101,17 @@ Given('the fleet of another user', async function () {
 
   that.otherFleet = handlerResult.getValue();
 });
+
+Given('this vehicle has been registered into the other user\'s fleet', async function () {
+  const that = this as TestingWorld;
+
+  assert(that.otherFleet, 'otherFleet is not defined');
+  assert(that.myVehicule, 'myVehicule is not defined');
+
+  const result = await that.registerVehiculeCommandHandler.handle({
+    fleetId: that.otherFleet.getId().toString(),
+    plateNumber: that.myVehicule.getPlateNumber().toString(),
+  });
+
+  assert(result.isSuccess, `Failed to register vehicle: ${result.error?.message}`);
+});
