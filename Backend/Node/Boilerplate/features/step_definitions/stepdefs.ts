@@ -4,8 +4,6 @@ import { TestingWorld } from './TestingWorld';
 import { Vehicule } from '../../src/domain/entities/Vehicule';
 import { VehiculeId } from '../../src/domain/valueObjects/VehiculeId';
 import { PlateNumber } from '../../src/domain/valueObjects/PlateNumber';
-import { Location } from '../../src/domain/valueObjects/Location';
-
 
 Given('my fleet', async function () {
   const that = this as TestingWorld;
