@@ -11,9 +11,7 @@ Given('my fleet', async function () {
   const that = this as TestingWorld;
 
   const handlerResult = await that.createFleetCommandHandler.handle({ userId: 'user-1' });
-  if (handlerResult.isFailure) {
-    throw new Error('Failed to create fleet');
-  }
+  assert(handlerResult.isSuccess, `Failed to create fleet: ${handlerResult.error?.message}`);
 
   that.myFleet = handlerResult.getValue();
 });
@@ -27,7 +25,8 @@ Given('a vehicle', async function () {
     null
   );
 
-  await that.vehiculeRepository.save(that.myVehicule);
+  const result = await that.vehiculeRepository.save(that.myVehicule);
+  assert(result.isSuccess, `Failed to save vehicle: ${result.error?.message}`);
 });
 
 
