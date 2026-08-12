@@ -6,12 +6,15 @@ import { CreateFleetCommandHandler } from '../../src/app/useCases/commands/creat
 import { Vehicule } from '../../src/domain/entities/Vehicule';
 import { VehiculeRepository } from '../../src/domain/repositories/VehiculeRepository';
 import { InMemoryVehiculeRepository } from '../../src/infra/repositories/InMemoryVehiculeRepository';
+import { RegisterVehiculeCommandHandler } from '../../src/app/useCases/commands/registerVehicule/RegisterVehiculeCommandHandler';
 
 export class TestingWorld extends World {
     fleetRepository: FleetRepository;
     vehiculeRepository: VehiculeRepository;
-    
+
     createFleetCommandHandler: CreateFleetCommandHandler;
+    registerVehiculeCommandHandler: RegisterVehiculeCommandHandler;
+
     myFleet?: Fleet;
     myVehicule?: Vehicule;
 
@@ -19,7 +22,11 @@ export class TestingWorld extends World {
         super(options);
         this.fleetRepository = new InMemoryFleetRepository();
         this.vehiculeRepository = new InMemoryVehiculeRepository();
-        
+
         this.createFleetCommandHandler = new CreateFleetCommandHandler(this.fleetRepository);
+        this.registerVehiculeCommandHandler = new RegisterVehiculeCommandHandler(
+            this.fleetRepository,
+            this.vehiculeRepository,
+        );
     }
 }

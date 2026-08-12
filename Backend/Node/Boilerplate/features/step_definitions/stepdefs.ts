@@ -31,3 +31,17 @@ Given('a vehicle', async function () {
 });
 
 
+When('I register this vehicle into my fleet', async function () {
+  const that = this as TestingWorld;
+
+  assert(that.myFleet, 'myFleet is not defined');
+  assert(that.myVehicule, 'myVehicule is not defined');
+
+  const result = await that.registerVehiculeCommandHandler.handle({
+    fleetId: that.myFleet.getId().toString(),
+    plateNumber: that.myVehicule.getPlateNumber().toString(),
+  });
+
+  assert(result.isSuccess, `Failed to register vehicle: ${result.error?.message}`);
+});
+
