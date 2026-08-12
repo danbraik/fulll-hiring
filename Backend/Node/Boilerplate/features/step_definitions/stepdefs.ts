@@ -6,6 +6,7 @@ import { VehiculeId } from '../../src/domain/valueObjects/VehiculeId';
 import { PlateNumber } from '../../src/domain/valueObjects/PlateNumber';
 import { AlreadyRegisteredVehiculeError } from '../../src/domain/entities/Fleet';
 import { Location } from '../../src/domain/valueObjects/Location';
+import { VehicleAlreadyParkedAtLocationError } from '../../src/app/useCases/commands/parkMyVehicle/ParkMyVehicleCommandHandler';
 
 Given('my fleet', async function () {
   const that = this as TestingWorld;
@@ -159,4 +160,51 @@ Then('the known location of my vehicle should verify this location', async funct
   const knownLocation = result.getValue();
   assert(knownLocation, 'Expected vehicle location to be defined');
   assert.strictEqual(knownLocation.equals(that.aLocation), true);
+});
+
+Given('my vehicle has been parked into this location', async function () {
+  const that = this as TestingWorld;
+
+  assert(that.myFleet, 'myFleet is not defined');
+  assert(that.myVehicule, 'myVehicule is not defined');
+  assert(that.aLocation, 'aLocation is not defined');
+
+  const result = await that.parkMyVehicleCommandHandler.handle({
+    fleetId: that.myFleet.getId().toString(),
+    plateNumber: that.myVehicule.getPlateNumber().toString(),
+    location: {
+      latitude: that.aLocation.getLatitude(),
+      longitude: that.aLocation.getLongitude(),
+      altitude: that.aLocation.getAltitude(),
+    },
+  });
+
+  assert(result.isSuccess, `Failed to park vehicle: ${result.error?.message}`);
+});
+
+When('I try to park my vehicle at this location', async function () {
+  const that = this as TestingWorld;
+
+  assert(that.myFleet, 'myFleet is not defined');
+  assert(that.myVehicule, 'myVehicule is not defined');
+  assert(that.aLocation, 'aLocation is not defined');
+
+  const result = await that.parkMyVehicleCommandHandler.handle({
+    fleetId: that.myFleet.getId().toString(),
+    plateNumber: that.myVehicule.getPlateNumber().toString(),
+    location: {
+      latitude: that.aLocation.getLatitude(),
+      longitude: that.aLocation.getLongitude(),
+      altitude: that.aLocation.getAltitude(),
+    },
+  });
+
+  that.lastParkMyVehicleResult = result;
+});
+
+Then('I should be informed that my vehicle is already parked at this location', function () {
+  const that = this as TestingWorld;
+
+  assert(that.lastParkMyVehicleResult, 'lastParkMyVehicleResult is not defined');
+  assert(that.lastParkMyVehicleResult.error instanceof VehicleAlreadyParkedAtLocationError, 'Expected VehicleAlreadyParkedAtLocationError');
 });

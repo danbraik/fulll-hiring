@@ -29,6 +29,7 @@ export class TestingWorld extends World {
     myVehicule?: Vehicule;
 
     lastRegisterVehiculeResult?: Result<void, Error>;
+    lastParkMyVehicleResult?: Result<void, Error>;
 
     aLocation?: Location;
 
