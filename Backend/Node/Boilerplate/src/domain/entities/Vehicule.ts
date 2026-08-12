@@ -17,10 +17,6 @@ export class Vehicule {
         return this.plateNumber;
     }
 
-    setPlateNumber(plateNumber: PlateNumber): void {
-        this.plateNumber = plateNumber;
-    }
-
     getLocation(): Location | null {
         return this.location;
     }
