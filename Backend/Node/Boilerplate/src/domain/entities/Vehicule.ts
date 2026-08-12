@@ -6,7 +6,7 @@ export class Vehicule {
   private constructor(
     private readonly id: VehiculeId,
     private plateNumber: PlateNumber,
-    private location: Location,
+    private location: Location | null,
   ) { }
 
   getId(): VehiculeId {
@@ -21,15 +21,15 @@ export class Vehicule {
     this.plateNumber = plateNumber;
   }
 
-  getLocation(): Location {
+  getLocation(): Location | null {
     return this.location;
   }
 
-  setLocation(location: Location): void {
+  setLocation(location: Location | null): void {
     this.location = location;
   }
 
-  static create(id: VehiculeId, plateNumber: PlateNumber, location: Location): Vehicule {
+  static create(id: VehiculeId, plateNumber: PlateNumber, location: Location | null): Vehicule {
     return new Vehicule(id, plateNumber, location);
   }
 }
