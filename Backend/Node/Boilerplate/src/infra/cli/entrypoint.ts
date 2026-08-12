@@ -13,7 +13,9 @@ import { initializeDatabase } from "../database/initialize";
 import { SqlFleetRepository } from "../repositories/SqlFleetRepository";
 import { SqlVehicleRepository } from "../repositories/SqlVehicleRepository";
 
-const database = initializeDatabase();
+const database = initializeDatabase(
+    process.env.FLEET_DATABASE_PATH ?? "fleet.sqlite",
+);
 const fleetRepository = new SqlFleetRepository(database);
 const vehicleRepository = new SqlVehicleRepository(database);
 

@@ -1,7 +1,6 @@
 import Database from "better-sqlite3";
 
-export function initializeDatabase(): Database.Database {
-    const databasePath = process.env.FLEET_DATABASE_PATH ?? "fleet.sqlite";
+export function initializeDatabase(databasePath: string): Database.Database {
     const database = new Database(databasePath);
 
     database.pragma("foreign_keys = ON");
