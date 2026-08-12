@@ -141,11 +141,15 @@ For now, I decided to attach a location to a vehicle because a vehicle can be pa
 
 `Location.equals()` compares latitude, longitude, and altitude.
 
-In practice, this means two locations are considered equal only when all stored coordinates match, including altitude when present.
+In practice, this means two locations are considered equal only when all stored coordinates match, including altitude only when both are present.
 
 ### Database
 
 For this exercise, the CLI uses SQLite through `better-sqlite3` and persists data in a local file. That keeps setup minimal while still exercising a real SQL-backed repository implementation.
+
+### Transaction boundary
+
+Registering a vehicle may require writing both the vehicle and the fleet. In a production implementation, these writes should share one transaction boundary, for example through an application-level unit of work coordinating both repositories. A dedicated repository for the registration operation would also be a pragmatic alternative. The current exercise keeps these repositories independent to avoid adding infrastructure complexity.
 
 ### Testing on database
 
