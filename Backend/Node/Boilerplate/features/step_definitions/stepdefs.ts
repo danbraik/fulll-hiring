@@ -93,3 +93,11 @@ Then('I should be informed this this vehicle has already been registered into my
   assert(that.lastRegisterVehiculeResult.error instanceof AlreadyRegisteredVehiculeError, 'Expected AlreadyRegisteredVehiculeError');
 });
 
+Given('the fleet of another user', async function () {
+  const that = this as TestingWorld;
+
+  const handlerResult = await that.createFleetCommandHandler.handle({ userId: 'user-1' });
+  assert(handlerResult.isSuccess, `Failed to create fleet: ${handlerResult.error?.message}`);
+
+  that.otherFleet = handlerResult.getValue();
+});

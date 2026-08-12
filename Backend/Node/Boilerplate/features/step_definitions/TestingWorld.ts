@@ -17,6 +17,7 @@ export class TestingWorld extends World {
     createFleetCommandHandler: CreateFleetCommandHandler;
     registerVehiculeCommandHandler: RegisterVehiculeCommandHandler;
     isVehicleRegisteredQueryHandler: IsVehicleRegisteredQueryHandler;
+    otherFleet?: Fleet;
 
     lastRegisterVehiculeResult?: Result<void, Error>;
 
