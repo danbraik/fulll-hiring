@@ -1,13 +1,11 @@
 import { Vehicule } from "../../../../domain/entities/Vehicule";
 import type { FleetRepository } from "../../../../domain/repositories/FleetRepository";
 import type { VehiculeRepository } from "../../../../domain/repositories/VehiculeRepository";
-import { FleetId } from "../../../../domain/valueObjects/FleetId";
 import { PlateNumber } from "../../../../domain/valueObjects/PlateNumber";
 import { VehiculeId } from "../../../../domain/valueObjects/VehiculeId";
 import { Result } from "../../../../shared/Result";
+import { getFleetOrFail } from "../../shared/handlerHelpers";
 import type { RegisterVehiculeCommand } from "./RegisterVehiculeCommand";
-
-export class FleetNotFoundError extends Error {}
 
 export class RegisterVehiculeCommandHandler {
     constructor(
@@ -18,17 +16,15 @@ export class RegisterVehiculeCommandHandler {
     async handle(
         command: RegisterVehiculeCommand,
     ): Promise<Result<void, Error>> {
-        const fleetResult = await this.fleetRepository.findById(
-            FleetId.create(command.fleetId),
+        const fleetResult = await getFleetOrFail(
+            this.fleetRepository,
+            command.fleetId,
         );
         if (fleetResult.isFailure) {
             return Result.fail(fleetResult.error);
         }
 
         const fleet = fleetResult.getValue();
-        if (!fleet) {
-            return Result.fail(new FleetNotFoundError());
-        }
 
         const plateNumber = PlateNumber.create(command.plateNumber);
         const vehiculeResult =

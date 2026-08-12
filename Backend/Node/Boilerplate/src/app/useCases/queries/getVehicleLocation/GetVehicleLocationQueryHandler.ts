@@ -1,13 +1,9 @@
 import type { FleetRepository } from "../../../../domain/repositories/FleetRepository";
 import type { VehiculeRepository } from "../../../../domain/repositories/VehiculeRepository";
 import type { Location } from "../../../../domain/valueObjects/Location";
-import { FleetId } from "../../../../domain/valueObjects/FleetId";
-import { PlateNumber } from "../../../../domain/valueObjects/PlateNumber";
 import { Result } from "../../../../shared/Result";
-import { FleetNotFoundError } from "../../commands/registerVehicule/RegisterVehiculeCommandHandler";
+import { getRegisteredVehicleOrFail } from "../../shared/handlerHelpers";
 import type { GetVehicleLocationQuery } from "./GetVehicleLocationQuery";
-
-export class VehicleNotRegisteredInFleetError extends Error {}
 
 export class GetVehicleLocationQueryHandler {
     constructor(
@@ -18,30 +14,17 @@ export class GetVehicleLocationQueryHandler {
     async handle(
         query: GetVehicleLocationQuery,
     ): Promise<Result<Location | null, Error>> {
-        const fleetResult = await this.fleetRepository.findById(
-            FleetId.create(query.fleetId),
+        const registeredVehicleResult = await getRegisteredVehicleOrFail(
+            this.fleetRepository,
+            this.vehiculeRepository,
+            query.fleetId,
+            query.plateNumber,
         );
-        if (fleetResult.isFailure) {
-            return Result.fail(fleetResult.error);
+        if (registeredVehicleResult.isFailure) {
+            return Result.fail(registeredVehicleResult.error);
         }
 
-        const fleet = fleetResult.getValue();
-        if (!fleet) {
-            return Result.fail(new FleetNotFoundError());
-        }
-
-        const vehiculeResult = await this.vehiculeRepository.findByPlateNumber(
-            PlateNumber.create(query.plateNumber),
-        );
-        if (vehiculeResult.isFailure) {
-            return Result.fail(vehiculeResult.error);
-        }
-
-        const vehicule = vehiculeResult.getValue();
-        if (!vehicule || !fleet.hasVehicule(vehicule.getId())) {
-            return Result.fail(new VehicleNotRegisteredInFleetError());
-        }
-
+        const { vehicule } = registeredVehicleResult.getValue();
         return Result.ok(vehicule.getLocation());
     }
 }

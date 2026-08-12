@@ -3,7 +3,7 @@ import type { VehiculeRepository } from "../../../../domain/repositories/Vehicul
 import { FleetId } from "../../../../domain/valueObjects/FleetId";
 import { PlateNumber } from "../../../../domain/valueObjects/PlateNumber";
 import { Result } from "../../../../shared/Result";
-import { FleetNotFoundError } from "../../commands/registerVehicule/RegisterVehiculeCommandHandler";
+import { FleetNotFoundError } from "../../shared/handlerHelpers";
 import type { IsVehicleRegisteredQuery } from "./IsVehicleRegisteredQuery";
 
 export class IsVehicleRegisteredQueryHandler {
