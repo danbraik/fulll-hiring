@@ -35,11 +35,7 @@ export class RegisterVehicleCommandHandler {
 
         let vehicle = vehicleResult.getValue();
         if (!vehicle) {
-            vehicle = Vehicle.create(
-                VehicleId.generate(),
-                plateNumber,
-                null,
-            );
+            vehicle = Vehicle.create(VehicleId.generate(), plateNumber, null);
 
             const saveVehicleResult =
                 await this.vehicleRepository.save(vehicle);

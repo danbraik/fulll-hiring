@@ -45,11 +45,10 @@ export class TestingWorld extends World {
         this.createVehicleCommandHandler = new CreateVehicleCommandHandler(
             this.vehicleRepository,
         );
-        this.registerVehicleCommandHandler =
-            new RegisterVehicleCommandHandler(
-                this.fleetRepository,
-                this.vehicleRepository,
-            );
+        this.registerVehicleCommandHandler = new RegisterVehicleCommandHandler(
+            this.fleetRepository,
+            this.vehicleRepository,
+        );
         this.parkMyVehicleCommandHandler = new ParkMyVehicleCommandHandler(
             this.fleetRepository,
             this.vehicleRepository,
