@@ -41,6 +41,53 @@ Build only:
 yarn build
 ```
 
+## CLI Usage
+
+The project includes a small CLI exposed through the root `fleet` script.
+
+You can run it either with:
+
+```bash
+./fleet <command>
+```
+
+or:
+
+```bash
+yarn fleet <command>
+```
+
+Available commands:
+
+```bash
+./fleet create <userId>
+./fleet register-vehicle <fleetId> <vehiclePlateNumber>
+./fleet localize-vehicle <fleetId> <vehiclePlateNumber> <lat> <lng> [alt]
+```
+
+Examples:
+
+```bash
+./fleet create user-1
+./fleet register-vehicle <fleetId> AA-123-AA
+./fleet localize-vehicle <fleetId> AA-123-AA 48.8566 2.3522
+./fleet localize-vehicle <fleetId> AA-123-AA 48.8566 2.3522 35
+```
+
+CLI behavior:
+
+- `create` prints the generated fleet id.
+- `register-vehicle` and `localize-vehicle` produce no output on success.
+- Invalid input or business-rule failures are written to stderr and return exit code `1`.
+- The CLI uses `fleet.sqlite` by default.
+- Set `FLEET_DATABASE_PATH` to use another SQLite file.
+
+Example:
+
+```bash
+FLEET_DATABASE_PATH=/tmp/fleet.sqlite ./fleet create user-1
+```
+
 ## Project Structure
 
 ```text
@@ -89,6 +136,15 @@ This keeps the aggregate boundary simple and prevents external mutation.
 `Location.equals()` compares latitude, longitude, and altitude.
 
 In practice, this means two locations are considered equal only when all stored coordinates match, including altitude when present.
+
+### Database
+
+For this exercise, the CLI uses SQLite through `better-sqlite3` and persists data in a local file. That keeps setup minimal while still exercising a real SQL-backed repository implementation.
+
+### Testing on database
+
+For the test suite, `TestingWorld` starts with in-memory repositories and switches tagged scenarios to an in-memory SQLite database. The handlers are initialized lazily so the same world can swap repository implementations cleanly between test modes.
+
 
 ## Tested Scenarios
 
