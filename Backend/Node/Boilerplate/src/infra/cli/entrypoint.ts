@@ -5,7 +5,6 @@ import { ParkMyVehicleCommand } from "../../app/useCases/commands/parkMyVehicle/
 import { ParkMyVehicleCommandHandler } from "../../app/useCases/commands/parkMyVehicle/ParkMyVehicleCommandHandler";
 import { RegisterVehicleCommand } from "../../app/useCases/commands/registerVehicle/RegisterVehicleCommand";
 import { RegisterVehicleCommandHandler } from "../../app/useCases/commands/registerVehicle/RegisterVehicleCommandHandler";
-import { GetVehicleLocationQuery } from "../../app/useCases/queries/getVehicleLocation/GetVehicleLocationQuery";
 import { GetVehicleLocationQueryHandler } from "../../app/useCases/queries/getVehicleLocation/GetVehicleLocationQueryHandler";
 import { IsVehicleRegisteredQuery } from "../../app/useCases/queries/isVehicleRegistered/IsVehicleRegisteredQuery";
 import { IsVehicleRegisteredQueryHandler } from "../../app/useCases/queries/isVehicleRegistered/IsVehicleRegisteredQueryHandler";
