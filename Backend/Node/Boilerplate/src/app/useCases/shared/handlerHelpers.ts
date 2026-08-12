@@ -6,9 +6,17 @@ import { FleetId } from "../../../domain/valueObjects/FleetId";
 import { PlateNumber } from "../../../domain/valueObjects/PlateNumber";
 import { Result } from "../../../shared/Result";
 
-export class FleetNotFoundError extends Error {}
+export class FleetNotFoundError extends Error {
+    constructor() {
+        super("Fleet not found");
+    }
+}
 
-export class VehicleNotRegisteredInFleetError extends Error {}
+export class VehicleNotRegisteredInFleetError extends Error {
+    constructor() {
+        super("Vehicle is not registered in the fleet");
+    }
+}
 
 type RegisteredVehicle = {
     fleet: Fleet;

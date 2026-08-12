@@ -3,7 +3,11 @@ import type { PlateNumber } from "../valueObjects/PlateNumber";
 import type { VehicleId } from "../valueObjects/VehicleId";
 import { Result, type Result as ResultType } from "../../shared/Result";
 
-export class VehicleAlreadyParkedAtLocationError extends Error {}
+export class VehicleAlreadyParkedAtLocationError extends Error {
+    constructor() {
+        super("Vehicle is already parked at the specified location");
+    }
+}
 
 export class Vehicle {
     private constructor(

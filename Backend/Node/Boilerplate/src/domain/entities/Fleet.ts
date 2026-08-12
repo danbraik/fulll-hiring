@@ -3,7 +3,11 @@ import type { FleetId } from "../valueObjects/FleetId";
 import type { UserId } from "../valueObjects/UserId";
 import type { VehicleId } from "../valueObjects/VehicleId";
 
-export class AlreadyRegisteredVehicleError extends Error {}
+export class AlreadyRegisteredVehicleError extends Error {
+    constructor() {
+        super("Vehicle is already registered in the fleet");
+    }
+}
 
 export class Fleet {
     private constructor(
