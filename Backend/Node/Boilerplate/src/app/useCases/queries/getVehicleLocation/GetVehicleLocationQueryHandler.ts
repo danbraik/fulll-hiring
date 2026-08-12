@@ -1,11 +1,11 @@
-import { FleetRepository } from "../../../../domain/repositories/FleetRepository";
-import { VehiculeRepository } from "../../../../domain/repositories/VehiculeRepository";
-import { Location } from "../../../../domain/valueObjects/Location";
+import type { FleetRepository } from "../../../../domain/repositories/FleetRepository";
+import type { VehiculeRepository } from "../../../../domain/repositories/VehiculeRepository";
+import type { Location } from "../../../../domain/valueObjects/Location";
 import { FleetId } from "../../../../domain/valueObjects/FleetId";
 import { PlateNumber } from "../../../../domain/valueObjects/PlateNumber";
 import { Result } from "../../../../shared/Result";
 import { FleetNotFoundError } from "../../commands/registerVehicule/RegisterVehiculeCommandHandler";
-import { GetVehicleLocationQuery } from "./GetVehicleLocationQuery";
+import type { GetVehicleLocationQuery } from "./GetVehicleLocationQuery";
 
 export class VehicleNotRegisteredInFleetError extends Error {}
 

@@ -1,7 +1,7 @@
 import { Result } from "../../shared/Result";
-import { FleetId } from "../valueObjects/FleetId";
-import { UserId } from "../valueObjects/UserId";
-import { VehiculeId } from "../valueObjects/VehiculeId";
+import type { FleetId } from "../valueObjects/FleetId";
+import type { UserId } from "../valueObjects/UserId";
+import type { VehiculeId } from "../valueObjects/VehiculeId";
 
 export class AlreadyRegisteredVehiculeError extends Error {}
 

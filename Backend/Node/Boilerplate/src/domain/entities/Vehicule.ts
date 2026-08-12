@@ -1,6 +1,6 @@
-import { Location } from "../valueObjects/Location";
-import { PlateNumber } from "../valueObjects/PlateNumber";
-import { VehiculeId } from "../valueObjects/VehiculeId";
+import type { Location } from "../valueObjects/Location";
+import type { PlateNumber } from "../valueObjects/PlateNumber";
+import type { VehiculeId } from "../valueObjects/VehiculeId";
 
 export class Vehicule {
     private constructor(

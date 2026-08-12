@@ -1,10 +1,10 @@
-import { FleetRepository } from "../../../../domain/repositories/FleetRepository";
-import { VehiculeRepository } from "../../../../domain/repositories/VehiculeRepository";
+import type { FleetRepository } from "../../../../domain/repositories/FleetRepository";
+import type { VehiculeRepository } from "../../../../domain/repositories/VehiculeRepository";
 import { FleetId } from "../../../../domain/valueObjects/FleetId";
 import { PlateNumber } from "../../../../domain/valueObjects/PlateNumber";
 import { Result } from "../../../../shared/Result";
 import { FleetNotFoundError } from "../../commands/registerVehicule/RegisterVehiculeCommandHandler";
-import { IsVehicleRegisteredQuery } from "./IsVehicleRegisteredQuery";
+import type { IsVehicleRegisteredQuery } from "./IsVehicleRegisteredQuery";
 
 export class IsVehicleRegisteredQueryHandler {
     constructor(

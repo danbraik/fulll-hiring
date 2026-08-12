@@ -1,6 +1,6 @@
 import assert from "assert";
 import { Given, When, Then } from "@cucumber/cucumber";
-import { TestingWorld } from "./TestingWorld";
+import type { TestingWorld } from "./TestingWorld";
 import { Vehicule } from "../../src/domain/entities/Vehicule";
 import { VehiculeId } from "../../src/domain/valueObjects/VehiculeId";
 import { PlateNumber } from "../../src/domain/valueObjects/PlateNumber";
