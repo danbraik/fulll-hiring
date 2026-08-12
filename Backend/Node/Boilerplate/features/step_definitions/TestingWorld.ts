@@ -27,11 +27,11 @@ export class TestingWorld extends World {
     myFleet?: Fleet;
     otherFleet?: Fleet;
     myVehicule?: Vehicule;
+    aLocation?: Location;
 
     lastRegisterVehiculeResult?: Result<void, Error>;
     lastParkMyVehicleResult?: Result<void, Error>;
 
-    aLocation?: Location;
 
     constructor(options: IWorldOptions<any>) {
         super(options);
